@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """
 @author: kebo
-@contact: itachi971009@gmail.com
+@contact: kebo0912@outlook.com
 @version: 1.0
 
 @file: model.py 
