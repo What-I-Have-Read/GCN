@@ -13,6 +13,8 @@
 from logging import getLogger
 import tensorflow as tf
 
+from utils import dot
+
 logger = getLogger(__name__)
 
 
@@ -52,7 +54,21 @@ class GraphConvolution(tf.keras.layers.Layer):
             x = tf.nn.dropout(x, 1 - self.dropout)
 
         # convolve
-        # todo
+        supports = list()
+        for i in range(len(support_)):
+            if not self.featureless:  # if it has features x
+                pre_sup = dot(x, self.weights_[i], spares=self.is_sparse_inputs)
+            else:
+                pre_sup = self.weights_[i]
+            support = dot(support_[i], pre_sup, spares=True)
+            supports.append(support)
+        output = tf.add_n(supports)
+
+        # bias
+        if self.bias:
+            output += self.bias
+
+        return self.activation(output)
 
     @classmethod
     def sparse_dropout(cls, x, rate, noise_shape):
