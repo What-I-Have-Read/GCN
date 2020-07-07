@@ -37,3 +37,18 @@ def ones(shape, name=None):
     """All ones."""
     initial = tf.ones(shape, dtype=tf.float32)
     return tf.Variable(initial, name=name)
+
+
+def dot(x, y, spares=False):
+    """
+    wrapper for tf.matmul (sparse vs dense)
+    :param x:
+    :param y:
+    :param spares:
+    :return:
+    """
+    if spares:
+        res = tf.sparse.sparse_dense_matmul(x, y)
+    else:
+        res = tf.matmul(x, y)
+    return res
