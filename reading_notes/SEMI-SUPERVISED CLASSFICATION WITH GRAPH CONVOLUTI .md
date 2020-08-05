@@ -14,11 +14,9 @@ Score /5: ⭐️⭐️⭐️⭐️⭐️
 
 文章以这样一个问题开始，假设我们需要对一个引文网络中的文档进行分类这就是一个图问题，我们有一个图，我们需要对图中的节点进行分类，但是我们只有图中一小部分节点的标签。这个问题就是一个基于图的半监督学习问题。
 
-
-
-![math](https://render.githubusercontent.com/render/math?math=%5Cmathcal%7BL%7D%20%3D%20%5Cmathcal%7BL%7D_%7B0%7D%20%2B%20%5Clambda%5Cmathcal%7BL%7D_%7Breg%7D%2C%20%5C%20with%20%5C%20%20%5Cmathcal%7BL%7D_%7Breg%7D%20%3D%20%5Csum_%7Bi%2Cj%7DA_%7Bij%7D%5Cparallel%20f%28X_i%29%20-%20f%28X_j%29%5Cparallel%5E2%20%3D%20f%28X%29%5ET%5CDelta%20f%28X%29)
-
-
+<p align="center">
+  <img src="https://latex.codecogs.com/svg.latex?\mathcal{L}%20=%20\mathcal{L}_{0}%20+%20\lambda\mathcal{L}_{reg},%20\%20with%20\%20%20\mathcal{L}_{reg}%20=%20\sum_{i,j}A_{ij}\parallel%20f(X_i)%20-%20f(X_j)\parallel^2%20=%20f(X)^T\Delta%20f(X)">
+</p>
 
 这里 ![math](https://render.githubusercontent.com/render/math?math=%5Cmathcal%7BL%7D_%7B0%7D) 代表监督学习部分的loss，即这个图中有标签的节点产生的loss。 ![math](https://render.githubusercontent.com/render/math?math=f%28.%29)   一般是一个小的神经网络或者可微函数。 ![math](https://render.githubusercontent.com/render/math?math=%5Clambda)  是一个常量， ![math](https://render.githubusercontent.com/render/math?math=X)  是一个包含所有节点特征向量的矩阵。 ![math](https://render.githubusercontent.com/render/math?math=%5CDelta%20%3D%20D%20-%20A)  表示这个图的拉普拉斯矩阵这，这个图是一个无向图 ![math](https://render.githubusercontent.com/render/math?math=%5Cmathcal%7BG%7D%20%3D%20%28%5Cmathcal%7BV%7D%2C%20%5Cmathcal%7BE%7D%29)  ，它有 ![math](https://render.githubusercontent.com/render/math?math=N) 个节点， ![math](https://render.githubusercontent.com/render/math?math=V) 个边， ![math](https://render.githubusercontent.com/render/math?math=%5Cmathcal%7Bv%7D_%7Bi%7D%20%5Cin%20%5Cmathcal%7BV%7D) 且 ![math](https://render.githubusercontent.com/render/math?math=%28v_i%2C%20v_j%29%20%5Cin%20%5Cmathcal%7BE%7D) ，还有一个邻接矩阵 ![math](https://render.githubusercontent.com/render/math?math=A%20%5Cin%20%5Csum_j%20A_%7Bi%2Cj%7D) 和一个度矩阵 ![math](https://render.githubusercontent.com/render/math?math=D_%7Bii%7D%20%3D%20%5Csum_j%20A_%7Bij%7D) 。在上述等式的建模方式中，我们假设图中的节点，如果他们相连，那么他们更有可能拥有相同的标签。
 
@@ -61,4 +59,4 @@ Score /5: ⭐️⭐️⭐️⭐️⭐️
 
 
 
- ![math](https://render.githubusercontent.com/render/math?math=%5Cmathcal%7BY%7D_L) 是有标签节点的集合，作者训练这个模型时是使用全局梯度下降，使用完整的数据集对每次训练迭代执行批量梯度下降。对 ![math](https://render.githubusercontent.com/render/math?math=A) 使用稀疏表示，则内存需求为 ![math](https://render.githubusercontent.com/render/math?math=O%28%5Cmathcal%7B%5Cleft%7C%5Cmathcal%7BE%7D%5Cright%7C%7D%29) ，需要内存跟边的数量是线性的，如果内存不够，还是建议使用小批量随机梯度下降。
+ ![math](https://render.githubusercontent.com/render/math?math=%5Cmathcal%7BY%7D_L) 是有标签节点的集合，作者训练这个模型时是使用全局梯度下降，使用完整的数据集对每次训练迭代执行批量梯度下降。对 ![math](https://render.githubusercontent.com/render/math?math=A) 使用稀疏表示，则内存需求为 ![math](https://latex.codecogs.com/svg.latex?O(\mathcal{\left|\mathcal{E}\right|})) ，需要内存跟边的数量是线性的，如果内存不够，还是建议使用小批量随机梯度下降。
